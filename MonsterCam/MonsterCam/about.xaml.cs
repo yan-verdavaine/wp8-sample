@@ -50,7 +50,7 @@ namespace MonsterCam
             {
                 EmailComposeTask email = new EmailComposeTask();
                 email.Subject = "Monster Cam";
-                email.To = "naya.application@gmail.com";
+                email.To = "";
 
                 email.Show();
             }

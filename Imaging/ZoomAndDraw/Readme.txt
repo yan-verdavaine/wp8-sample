@@ -1,0 +1,1 @@
+Original post : http://developer.nokia.com/community/discussion/showthread.php/246150-How-to-pan-an-image-with-two-fingers

@@ -530,11 +530,11 @@ namespace PictureNavigation.Method2
 
       
 
-           /* var bitmapLR =new Bitmap(
+            var bitmapLR =new Bitmap(
                 new Size(InputLR.PixelWidth, InputLR.PixelHeight),
                ColorMode.Bgra8888,
                (uint)(4*InputLR.PixelWidth),
-               InputLR.Pixels.AsBuffer());*/
+               InputLR.Pixels.AsBuffer());
              
             var tmpBitmp = new WriteableBitmap(LRblocksize, LRblocksize);
 
@@ -548,7 +548,7 @@ namespace PictureNavigation.Method2
                     var tmpWidth = (int)Math.Min((double)LRblocksize, InputLR.PixelWidth - x * LRblocksize);
                     if (tmpWidth <= 0) break;
 
-                   /* var tmp = new Bitmap(bitmapLR,
+                    var tmp = new Bitmap(bitmapLR,
                         new Rect((double)x * LRblocksize, (double)y * LRblocksize,
                             tmpWidth,
                             tmpheight
@@ -561,33 +561,8 @@ namespace PictureNavigation.Method2
                             (double)blocksize, 
                             (double)blocksize), 
                             0) };
-                        await render.RenderAsync();*/
-                    using (var filter = new FilterEffect(source))
-                    using (var render = new WriteableBitmapRenderer(filter, tmpBitmp))
-                    {
-                        filter.Filters = new IFilter[] { new ReframingFilter(new Rect(x * blocksize, y * blocksize, 
-                            blocksize, 
-                            blocksize), 
-                            0) };
                         await render.RenderAsync();
-                     
                     }
-                    GC.Collect();
-                    var w = InputLR.PixelWidth;
-                    var bufin = tmpBitmp.Pixels;
-                    var bufout = InputLR.Pixels;
-
-                    for (int i = 0; i < tmpheight; ++i)
-                    {
-                        Array.Copy(
-                            bufin, i * LRblocksize, 
-                            bufout, (y * LRblocksize + i) * w + x * LRblocksize, 
-                            tmpWidth);
-                    }
-
-
-               
-
 
                 }
             }

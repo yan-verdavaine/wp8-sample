@@ -57,6 +57,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <GenerateManifest>false</GenerateManifest>
+    <NuGetPackageImportStamp>ea265fa2</NuGetPackageImportStamp>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -142,5 +143,12 @@
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
     <Import Project="..\packages\NokiaImagingSDK.1.0.270.0\build\native\NokiaImagingSDK.targets" Condition="Exists('..\packages\NokiaImagingSDK.1.0.270.0\build\native\NokiaImagingSDK.targets')" />
+    <Import Project="..\packages\NokiaImagingSDK.1.2.115\build\native\NokiaImagingSDK.targets" Condition="Exists('..\packages\NokiaImagingSDK.1.2.115\build\native\NokiaImagingSDK.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\NokiaImagingSDK.1.2.115\build\native\NokiaImagingSDK.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NokiaImagingSDK.1.2.115\build\native\NokiaImagingSDK.targets'))" />
+  </Target>
 </Project>

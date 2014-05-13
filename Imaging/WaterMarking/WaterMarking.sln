@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Express 2012 for Windows Phone
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhoneApp1", "PhoneApp1\PhoneApp1.csproj", "{8EE83530-3381-4BD4-971E-3115CFD6E8E5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WaterMarking", "WaterMarking\PhoneApp1.csproj", "{8EE83530-3381-4BD4-971E-3115CFD6E8E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

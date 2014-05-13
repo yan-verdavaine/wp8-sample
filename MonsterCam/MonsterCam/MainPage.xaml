@@ -1,0 +1,81 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="MonsterCam.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="800" 
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait"  Orientation="Portrait"
+    shell:SystemTray.IsVisible="False" >
+
+
+    <Grid Name="toto">
+    <Grid.Resources>
+            <DataTemplate x:Name="listpicker">
+                <TextBlock Text="{Binding}" Margin="12 15 0 0"  HorizontalAlignment="Stretch" FontSize="30" />
+            </DataTemplate>
+        </Grid.Resources>
+        <!--LayoutRoot is the root grid where all page content is placed-->
+        <StackPanel   x:Name="LayoutRoot" Margin="0,0,0,72" Background="Transparent" Orientation="Vertical">
+            <!--Pivot Control-->
+
+
+
+            <Grid Name="Header"  HorizontalAlignment="Stretch" Width="480">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="198*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <toolkit:ListPicker ExpansionMode="FullScreenOnly" FullModeItemTemplate="{StaticResource listpicker}"  Name="RootPivot" SelectionChanged="RootPivot_SelectionChanged" />
+                <ItemsControl ItemsSource="{Binding control}" Grid.Row="1"  />
+
+                <Canvas Height="110" HorizontalAlignment="Right"  Name="PreviewCanvas" VerticalAlignment="Top" Width="82" Grid.Column="1" Grid.RowSpan="2" Visibility="Collapsed">
+                    <Rectangle Width="{Binding Width,ElementName=PreviewCanvas}"  Height="{Binding Height,ElementName=PreviewCanvas}" StrokeThickness="4" Stroke="Red" />
+                    <ItemsControl ItemsSource="{Binding Path=previewElements}">
+                        <ItemsControl.RenderTransform>
+                            <ScaleTransform ScaleX="0.2" ScaleY="0.2"/>
+                        </ItemsControl.RenderTransform>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <Canvas />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </Canvas>
+            </Grid>
+
+
+
+
+
+
+
+
+
+            <!--Image Name="splashScreen" Source="/CameraMonster;component/SplashScreen2.jpg" /-->
+        </StackPanel>
+    </Grid>
+    <!--Canvas  Width="100" Height="100" VerticalAlignment="Bottom" Background="#5AF80000">
+           
+        </Canvas-->
+        
+
+    <phone:PhoneApplicationPage.ApplicationBar >
+        <shell:ApplicationBar IsVisible="True" Opacity="0.99" IsMenuEnabled="True" x:Name="AppBar">
+          
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
+</phone:PhoneApplicationPage>

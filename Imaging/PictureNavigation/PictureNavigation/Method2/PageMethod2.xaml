@@ -1,0 +1,43 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="PictureNavigation.Method2.PageMethod2"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="True">
+
+    <StackPanel x:Name="TitlePanel" >
+        <TextBlock Text="Method 2" Style="{StaticResource PhoneTextNormalStyle}" Margin="12,0"/>
+        <Grid Background="Black">
+            <Canvas x:Name="displayImage" Height="701"  Width="480" />
+
+            <StackPanel Background="#7F000000" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <TextBlock x:Name="displayInfo" Style="{StaticResource PhoneTextNormalStyle}" Margin="12,0" IsHitTestVisible="False" FontWeight="Bold">
+                    <TextBlock.Foreground>
+                        <SolidColorBrush Color="Red"/>
+                    </TextBlock.Foreground>
+                </TextBlock>
+            </StackPanel>
+
+        </Grid>
+
+    </StackPanel>
+
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
+            <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/feature.camera.png" Text="Image" Click="ApplicationBarIconButton_Click_1"/>
+            <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/delete.png" Text="memory" Click="ApplicationBarIconButton_Click_2" />
+            <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/edit.png" Text="Show/Hide" Click="ApplicationBarIconButton_Click"  />
+            <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/save.png" Text="Save ROI" Click="ApplicationBarIconButton_Click_3"  />
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
+
+</phone:PhoneApplicationPage>

@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resources">
+      <UniqueIdentifier>5fd0e509-b6ae-4f29-bd2a-4d2cc10f3aa0</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="wpa81">
+      <UniqueIdentifier>{49d6bd6d-7060-45f0-a9bd-84afa006c5b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="wpa81\Help">
+      <UniqueIdentifier>{3f6e71a8-9e16-4664-86cf-b9e8ac2b131e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Effect">
+      <UniqueIdentifier>{d569aa41-c46c-4984-b90c-31dec49c7cb5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Filter">
+      <UniqueIdentifier>{8064cec7-95c6-45f5-8e87-b97c1828fd5e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CPP.cpp" />
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="MyEffect.cpp">
+      <Filter>Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="MyFilter.cpp">
+      <Filter>Filter</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CPP.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="MyEffect.h">
+      <Filter>Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="MyFilter.h">
+      <Filter>Filter</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="wpa81\Help\Nokia Imaging SDK.chm">
+      <Filter>wpa81\Help</Filter>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+</Project>

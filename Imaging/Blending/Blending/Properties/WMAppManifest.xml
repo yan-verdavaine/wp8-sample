@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2012/deployment" AppPlatformVersion="8.0">
   <DefaultLanguage xmlns="" code="en-US" />
-  <App xmlns="" ProductID="{2b0a89f2-91b8-4f5b-bd7c-6895b3a2162f}" Title="PhoneAppTest" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="PhoneAppTest author" Description="Sample description" Publisher="PhoneAppTest" PublisherID="{f0576845-c1ec-42af-9deb-ed9318e55b02}">
+  <App xmlns="" ProductID="{2b0a89f2-91b8-4f5b-bd7c-6895b3a2162f}" Title="Blending" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="PhoneAppTest author" Description="Sample description" Publisher="PhoneAppTest" PublisherID="{f0576845-c1ec-42af-9deb-ed9318e55b02}">
     <IconPath IsRelative="true" IsResource="false">Assets\ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_NETWORKING" />

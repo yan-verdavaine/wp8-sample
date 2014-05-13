@@ -1,0 +1,40 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="multiStream.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    shell:SystemTray.IsVisible="True">
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+       
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28" Grid.ColumnSpan="2">
+            <TextBlock Name="displayInfo" Style="{StaticResource PhoneTextNormalStyle}" Margin="12,0"/>
+        </StackPanel>
+        <Image CacheMode="BitmapCache" Grid.Row="1"  x:Name="d1" Stretch="UniformToFill"></Image>
+        <Image CacheMode="BitmapCache" Grid.Row="1" Grid.Column="1" x:Name="d2" Stretch="UniformToFill"></Image>
+        <Image CacheMode="BitmapCache" Grid.Row="2"  x:Name="d3" Stretch="UniformToFill"></Image>
+        <Image CacheMode="BitmapCache" Grid.Row="2" Grid.Column="1" x:Name="d4" Stretch="UniformToFill"/>
+
+    </Grid>
+
+</phone:PhoneApplicationPage>

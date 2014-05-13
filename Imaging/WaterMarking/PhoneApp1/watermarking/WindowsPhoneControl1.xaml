@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="PhoneApp1.watermarking.WindowsPhoneControl1"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    d:DesignHeight="480" d:DesignWidth="480">
+
+    <Grid x:Name="LayoutRoot" >
+
+        <TextBlock  Name="txt2" FontWeight="Bold" Foreground="#99000000" Text="test" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock.RenderTransform>
+                <CompositeTransform Rotation="-45"/>
+            </TextBlock.RenderTransform></TextBlock>
+
+        <Grid Background="#7FFF0000" VerticalAlignment="Bottom"  >
+            <TextBlock Name="txt" Text="test" TextAlignment="Right" FontSize="100" Margin="0,0,24,11"></TextBlock>
+        </Grid>
+    </Grid>
+</UserControl>

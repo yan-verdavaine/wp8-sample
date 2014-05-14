@@ -33,8 +33,8 @@ namespace HighlightAlpha
             {
                 rendering = true;
 
-                using (var effect = new CustomEffect.HighlightAlpha(picture))
-                using (var renderer = new WriteableBitmapRenderer(effect, bmp))
+                using (var effect = new CustomEffect.HighlightAlpha(picture,13))
+                using (var renderer = new WriteableBitmapRenderer(effect, bmp, OutputOption.PreserveAspectRatio))
                 {
                     display.Source = await renderer.RenderAsync();
                 }

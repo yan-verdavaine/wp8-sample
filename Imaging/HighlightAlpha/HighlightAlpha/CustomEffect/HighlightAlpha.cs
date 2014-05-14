@@ -47,18 +47,26 @@ namespace HighlightAlpha.CustomEffect
 
             uint r2 = maskSize_2 * maskSize_2;
 
-            for(int i = -(int)maskSize_2; i <= maskSize_2;++i)
+            //compute circle mask
+           for(int i = -(int)maskSize_2; i <= maskSize_2;++i)
                 for (int j = -(int)maskSize_2; j <= maskSize_2; ++j)
                 {
-
                     int d2 = i*i +j*j;
                     if(d2 == 0 || d2>r2)
                         continue;
 
                     maskIndex.Add(i * (int)width + j);
-
                 }
 
+          /*  for (int i = -(int)maskSize_2; i <= maskSize_2; ++i)
+                for (int j = -(int)maskSize_2; j <= maskSize_2; ++j)
+                {
+                    int d = Math.Abs(i) + Math.Abs(j);
+                    if (d == 0 || d > maskSize_2)
+                        continue;
+
+                    maskIndex.Add(i * (int)width + j);
+                }*/
 
 
            for(uint i = maskSize_2; i <height - maskSize_2;++i)

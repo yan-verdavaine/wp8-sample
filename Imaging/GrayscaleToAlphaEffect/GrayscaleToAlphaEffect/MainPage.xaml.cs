@@ -42,7 +42,7 @@ namespace GrayscaleToAlphaEffect
             if (picture == null || rendering)
                 return;
 
-            var bmp = new WriteableBitmap(300, 300);
+            var bmp = new WriteableBitmap(480, 800);
             try
             {
                 rendering = true;

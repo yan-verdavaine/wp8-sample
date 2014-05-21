@@ -82,7 +82,7 @@ namespace CSharp.Recipe
 
             virtual public void Dispose()
             {
-                throw new NotImplementedException();
+               
             }
     }
 }

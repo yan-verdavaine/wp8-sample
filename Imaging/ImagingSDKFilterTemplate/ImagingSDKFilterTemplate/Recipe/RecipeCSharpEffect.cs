@@ -21,8 +21,10 @@ namespace ImagingSDKFIlterTemplate.Recipe
 
         override public void Dispose()
         {
+            
             if (effect != null)
             {
+              
                 effect.Dispose();
                 effect = null;
             }

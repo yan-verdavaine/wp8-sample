@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2012/deployment" AppPlatformVersion="8.0">
   <DefaultLanguage xmlns="" code="en-US" />
-  <App xmlns="" ProductID="{6e400549-d1bd-4c11-a622-611df0b4d96b}" Title="ImagingSDKFIlterTemplate" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="ImagingSDKFIlterTemplate author" Description="Sample description" Publisher="ImagingSDKFIlterTemplate" PublisherID="{4f730e03-3082-439e-a5d9-65258e542bad}">
+  <App xmlns="" ProductID="{6e400549-d1bd-4c11-a622-611df0b4d96b}" Title="# ImagingSDKFIlterTemplate" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="ImagingSDKFIlterTemplate author" Description="Sample description" Publisher="ImagingSDKFIlterTemplate" PublisherID="{4f730e03-3082-439e-a5d9-65258e542bad}">
     <IconPath IsRelative="true" IsResource="false">Assets\ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_MEDIALIB_AUDIO" />

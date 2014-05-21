@@ -13,6 +13,7 @@ using System.Threading;
 using System.Windows.Media;
 using System.Windows.Threading;
 using Microsoft.Phone.Info;
+using System.Threading.Tasks;
 
 namespace ImagingSDKFIlterTemplate
 {
@@ -155,7 +156,7 @@ namespace ImagingSDKFIlterTemplate
                 _cameraStreamSource.UpdateEffect();
         }
 
-        private async void Initialize()
+        private async Task Initialize()
         {
 
 
@@ -235,7 +236,7 @@ namespace ImagingSDKFIlterTemplate
             }
         }
 
-        private void ApplicationBarIconButton_Switch(object sender, EventArgs e)
+        private async void ApplicationBarIconButton_Switch(object sender, EventArgs e)
         {
 
             if (PhotoCaptureDevice.AvailableSensorLocations.Contains(CameraSensorLocation.Front))
@@ -244,7 +245,7 @@ namespace ImagingSDKFIlterTemplate
                 {
                     _cameraLocation = _cameraLocation == CameraSensorLocation.Back ? CameraSensorLocation.Front : CameraSensorLocation.Back;
                     Uninitialize();
-                    Initialize();
+                   await  Initialize();
 
                     _cameraSemaphore.Release();
                 }

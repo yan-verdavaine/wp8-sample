@@ -299,7 +299,14 @@ namespace viewfinder.control
                 commandeRunning = true;
                 int angle = (int)(m_orientationAngle + m_captureDevice.SensorRotationInDegrees);
                 if (angle < 0) angle += 360;
-                m_captureDevice.SetProperty(KnownCameraGeneralProperties.EncodeWithOrientation, angle);
+                if (m_sensorLocation == CameraSensorLocation.Back)
+                {
+                    m_captureDevice.SetProperty(KnownCameraGeneralProperties.EncodeWithOrientation, angle);
+                }
+                else
+                {
+                    m_captureDevice.SetProperty(KnownCameraGeneralProperties.EncodeWithOrientation, -angle);
+                }
                 m_captureDevice.SetProperty(KnownCameraGeneralProperties.SpecifiedCaptureOrientation, 0);
 
 
@@ -312,14 +319,10 @@ namespace viewfinder.control
                 {
                     return stream.GetWindowsRuntimeBuffer();
                 }
-
-
-                //
-                if (angle == 90 || angle == 270)
-                    return await JpegTools.FlipAndRotateAsync(stream.GetWindowsRuntimeBuffer(), FlipMode.Vertical, Rotation.Rotate0, JpegOperation.AllowLossy);
                 else
+                {
                     return await JpegTools.FlipAndRotateAsync(stream.GetWindowsRuntimeBuffer(), FlipMode.Horizontal, Rotation.Rotate0, JpegOperation.AllowLossy);
-
+                }
 
             }
             finally

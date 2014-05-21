@@ -16,6 +16,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using System.Threading.Tasks;
 using ImagingSDKFIlterTemplate.Recipe;
+using Windows.Storage.Streams;
+using Microsoft.Xna.Framework.Media;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 
 namespace ImagingSDKFIlterTemplate
@@ -24,51 +27,14 @@ namespace ImagingSDKFIlterTemplate
     {
 
 
-        #region Filter
+#region Filter
 
-        //filter/effect implementation
-        async Task<WriteableBitmap> renderPipeline(IImageProvider source, WriteableBitmap bitmapOutput)
-        {
-
-            if (source == null || bitmapOutput == null) return null;
-
-              var t = DateTime.Now;
-
-           //using (var effect = new RecipeCSharpEffect(source, FilterParam.Value)) //Recipe with C# custom effect
-           //using  (var effect = new RecipeCSharpFilter(source, FilterParam.Value))//Recipe with C# custom Filter
-           // using (var effect = new RecipeCPPEffect(source, FilterParam.Value))   //Recipe with CPP custom effect   
-          //  using (var effect = new RecipeCPPFilter(source, FilterParam.Value))     //Recipe with CPP custom effect  
-            using (var effect = new RecipeDaisyChain(source, FilterParam.Value))     //Recipe Daysi chain 
-            using (var renderer = new WriteableBitmapRenderer(effect,bitmapOutput))   
-               {
-
-                  var result = await renderer.RenderAsync();
-
-                 var ms = DateTime.Now.Subtract(t).TotalMilliseconds;
-                 previewResult = string.Format(
-@"ImageSize = {0}x{1}
-t = {1:F}
-
-", bitmapOutput.PixelWidth, bitmapOutput.PixelHeight, ms); 
-                
-
-
-                return result;
-               }
-
-
-
-                  
-                   
-
-
-
-        }
-
-
-        //GUI filter/effect parameters update
+        //slider value change
         private void FilterParam_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
+            //update factory param value with slider value
+            RecipeFactory.Current.Param = e.NewValue;
+            //schedule rendering
             requestProcessing();
         }
       
@@ -76,6 +42,7 @@ t = {1:F}
 
 
         #region Internal
+    
         StreamImageSource HRImagesource = null;
         Windows.Foundation.Size ImageSize;
         WriteableBitmap LRImageSource;
@@ -144,7 +111,16 @@ t = {1:F}
             };
         }
 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
 
+            FilterParam.Value = RecipeFactory.Current.Param;
+           /* if(e.NavigationMode == NavigationMode.New || e.NavigationMode == NavigationMode.Reset || e.NavigationMode == NavigationMode.Refresh)
+            {
+                selectPicture();
+            }*/
+        }
         enum STATE
         {
             WAIT,
@@ -199,9 +175,26 @@ t = {1:F}
 
             try
             {
+                if (LRImageSource == null) return;
                 using (var source = new BitmapImageSource(LRImageSource.AsBitmap()))
                 {
-                    await renderPipeline(source, bitmapTmp);
+
+                    var t = DateTime.Now;
+                    var effect = RecipeFactory.Current.CreatePipeline(source);
+                    using (var renderer = new WriteableBitmapRenderer(effect, bitmapTmp))
+                    {
+
+                        var result = await renderer.RenderAsync();
+                        var ms = DateTime.Now.Subtract(t).TotalMilliseconds;
+                        previewResult = string.Format(
+@"ImageSize = {0}x{1}
+t = {1:F}
+
+", bitmapTmp.PixelWidth, bitmapTmp.PixelHeight, ms);
+                    }
+                    if (effect is IDisposable)
+                        (effect as IDisposable).Dispose();
+
                 }
                 bitmapTmp.Invalidate();
 
@@ -224,14 +217,8 @@ t = {1:F}
         }
 
 
-
-
-
-
-
-        private void ApplicationBarIconButton_Image(object sender, EventArgs e)
+        void selectPicture()
         {
-
             try
             {
                 PhotoChooserTask task = new PhotoChooserTask();
@@ -247,7 +234,7 @@ t = {1:F}
                         HRImagesource = new StreamImageSource(res.ChosenPhoto);
                         var info = await HRImagesource.GetInfoAsync();
                         ImageSize = info.ImageSize;
- 
+
                         //create LR image
                         using (var renderer = new WriteableBitmapRenderer(HRImagesource, LRImageSource))
                             await renderer.RenderAsync();
@@ -264,6 +251,10 @@ t = {1:F}
                 throw;
             }
         }
+        private void ApplicationBarIconButton_Image(object sender, EventArgs e)
+        {
+            selectPicture();
+        }
 
         private void ApplicationBarIconButton_Info(object sender, EventArgs e)
         {
@@ -279,7 +270,7 @@ t = {1:F}
             if (currentState != STATE.WAIT || HRImagesource == null) return;
             try
             {
-                benchResult = "BENCH RUNING...";
+                benchResult = "BENCH RUNNING...";
                 IsEnabled = false;
                 benchRuning = true;
                 ApplicationBar.IsVisible = false;
@@ -294,13 +285,21 @@ t = {1:F}
                 for (; nbTest < 100 && benchRuning; ++nbTest)
                 {
                     var t = DateTime.Now;
-                    await renderPipeline(HRImagesource, bitmap);
+
+                    var effect = RecipeFactory.Current.CreatePipeline(HRImagesource);
+                    using (var renderer = new WriteableBitmapRenderer(effect, bitmap))
+                    {
+                         await renderer.RenderAsync();
+                    }
+                    if (effect is IDisposable)
+                        (effect as IDisposable).Dispose();
+
                     var ms = DateTime.Now.Subtract(t).TotalMilliseconds;
                     tacc += ms;
                     if (ms < tmin) tmin = ms;
                     if (ms > tmax) tmax = ms;
                     benchResult = string.Format(
-@"BENCH RUNING...
+@"BENCH RUNNING...
 Nb rendering = {0}
 TMin = {1:F}
 TMax = {2:F}
@@ -339,8 +338,37 @@ ImageSize = {4}x{5}
                 base.OnBackKeyPress(e);
         }
 
-         #endregion
+       private  void ApplicationBarIconButton_Live(object sender, EventArgs e)
+       {
+           NavigationService.Navigate(new Uri("/Live.xaml", UriKind.Relative));
+
+       }
+
+        private async void ApplicationBarIconButton_Save(object sender, EventArgs e)
+        {
+
+            if (currentState != STATE.WAIT || HRImagesource == null) return;
+
+            IBuffer imageInMemory;
+
+            var effect = RecipeFactory.Current.CreatePipeline(HRImagesource);
+            using (var renderer = new JpegRenderer(effect))
+            {
+                imageInMemory = await renderer.RenderAsync();
+            }
+            if (effect is IDisposable)
+                (effect as IDisposable).Dispose();
+
+            using (MediaLibrary mediaLibrary = new MediaLibrary())
+                 mediaLibrary.SavePicture(String.Format("image {0:yyyyMMdd-HHmmss}", DateTime.Now), imageInMemory.AsStream());
+
+            MessageBox.Show("Image saved");
 
 
+
+
+        }
+
+        #endregion
     }
 }

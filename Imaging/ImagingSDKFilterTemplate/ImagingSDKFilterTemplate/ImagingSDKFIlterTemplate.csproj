@@ -72,15 +72,20 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CameraStreamSource.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Live.xaml.cs">
+      <DependentUpon>Live.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Recipe\RecipeCPPFilter.cs" />
     <Compile Include="Recipe\RecipeCPPEffect.cs" />
     <Compile Include="Recipe\RecipeCSharpFilter.cs" />
     <Compile Include="Recipe\RecipeCSharpEffect.cs" />
     <Compile Include="Recipe\RecipeDaisyChain.cs" />
+    <Compile Include="Recipe\RecipeFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -88,6 +93,10 @@
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
     <Page Include="MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Live.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -102,10 +111,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\AlignmentGrid.png" />
+    <Content Include="Assets\appbar.camera.switch.png" />
+    <Content Include="Assets\appbar.image.select.png" />
     <Content Include="Assets\AppBar\download.png" />
     <Content Include="Assets\AppBar\edit.png" />
     <Content Include="Assets\AppBar\feature.calendar.png" />
     <Content Include="Assets\AppBar\feature.camera.png" />
+    <Content Include="Assets\AppBar\feature.video.png" />
     <Content Include="Assets\AppBar\like.png" />
     <Content Include="Assets\AppBar\save.png" />
     <Content Include="Assets\AppBar\share.png" />
@@ -154,12 +166,11 @@
   </Target>
   -->
   <ProjectExtensions />
- 
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-     <Error Condition="!Exists('..\packages\NokiaImagingSDK.1.2.99\build\wp8\NokiaImagingSDK.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NokiaImagingSDK.1.2.99\build\wp8\NokiaImagingSDK.targets'))" />
+    <Error Condition="!Exists('..\packages\NokiaImagingSDK.1.2.99\build\wp8\NokiaImagingSDK.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NokiaImagingSDK.1.2.99\build\wp8\NokiaImagingSDK.targets'))" />
   </Target>
   <Import Project="..\packages\NokiaImagingSDK.1.2.99\build\wp8\NokiaImagingSDK.targets" Condition="Exists('..\packages\NokiaImagingSDK.1.2.99\build\wp8\NokiaImagingSDK.targets')" />
 </Project>

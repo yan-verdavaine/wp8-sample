@@ -20,7 +20,7 @@ namespace ImagingSDKFIlterTemplate.Recipe
         {
 
             var value = 0.5 + 3 * Param;
-            return new RecipeCSharpEffect(source, value); //Recipe with C# custom effect
+            //return new RecipeCSharpEffect(source, value); //Recipe with C# custom effect
           //  return new RecipeCSharpFilter(source, value);//Recipe with C# custom Filter
            // return new RecipeCPPEffect(source, value);   //Recipe with CPP custom effect   
             //return new RecipeCPPFilter(source, value);     //Recipe with CPP custom effect  

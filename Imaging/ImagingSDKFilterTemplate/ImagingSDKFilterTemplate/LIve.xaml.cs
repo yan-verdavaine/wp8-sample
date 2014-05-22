@@ -200,7 +200,6 @@ namespace ImagingSDKFIlterTemplate
             
             if (_cameraStreamSource != null)
             {
-                _cameraStreamSource.Close();
                 _cameraStreamSource.FrameRateChanged -= CameraStreamSource_FPSChanged;
                 _cameraStreamSource = null;
             }

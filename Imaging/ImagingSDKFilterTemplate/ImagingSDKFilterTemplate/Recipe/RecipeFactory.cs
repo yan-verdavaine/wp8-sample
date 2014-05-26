@@ -9,12 +9,14 @@ namespace ImagingSDKFIlterTemplate.Recipe
 {
     public class RecipeFactory
     {
+        #region singleton part
         private static Lazy<RecipeFactory> mSingleton =  new Lazy<RecipeFactory>(true);
         static public RecipeFactory Current { get { return mSingleton.Value; } }
-
-
+        public RecipeFactory() { }
+        #endregion
+       
+        
         public double Param { get; set; }
-
 
         public IImageProvider CreatePipeline(IImageProvider source)
         {
@@ -25,15 +27,7 @@ namespace ImagingSDKFIlterTemplate.Recipe
            // return new RecipeCPPEffect(source, value);   //Recipe with CPP custom effect   
             //return new RecipeCPPFilter(source, value);     //Recipe with CPP custom effect  
             return new RecipeDaisyChain(source, value);    //Recipe Daisy chain 
-
-
         }
-
-
-
-        public RecipeFactory(){}
-
-
 
     }
 }

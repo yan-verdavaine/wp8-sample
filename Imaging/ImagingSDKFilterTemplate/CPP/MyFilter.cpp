@@ -1,7 +1,12 @@
 #include "pch.h"
 #include "MyFilter.h"
+
+//include use to acces IBuffer memory
 #include <wrl.h>
 #include <robuffer.h>
+
+//concurrency::create_async
+#include <ppltasks.h>
 
 using namespace CPP;
 
@@ -32,7 +37,14 @@ Nokia::Graphics::Imaging::ICustomFilterResponse^ MyFilter::BeginProcessing(Nokia
 		
 Windows::Foundation::IAsyncAction^ MyFilter::PrepareAsync()
 {
+	//if you don't need to load data, return nullptr
 	return nullptr;
+
+	//or use concurrency::create_async
+	return concurrency::create_async([this]()
+	{
+		//load you data here
+	});
 }
 
 namespace

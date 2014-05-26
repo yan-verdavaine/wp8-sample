@@ -23,8 +23,8 @@ namespace ImagingSDKFIlterTemplate
         {
             //update factory param value with slider value
             RecipeFactory.Current.Param = e.NewValue;
+            //idication recipe should be updated
             UpdateEffect();
-
         }
 
 
@@ -225,7 +225,7 @@ namespace ImagingSDKFIlterTemplate
            _fps = String.Format("FPS : {0}", e);
         }
 
-        private async void LayoutRoot_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        private async void canvas_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
             if (_cameraSemaphore.WaitOne(100))
             {
@@ -256,5 +256,7 @@ namespace ImagingSDKFIlterTemplate
             displayInfo.Visibility = displayInfo.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
         }
         #endregion
+
+    
     }
 }

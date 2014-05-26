@@ -20,7 +20,6 @@ namespace ImagingSDKFIlterTemplate.Recipe
             if(factor>2) factor = 2;
             effect_2.Filters = new IFilter[] { new HueSaturationFilter(-1 + factor, 0), new LomoFilter() };
 
-
             SetPipelineBeginEnd(effect_1, effect_2);
 
 

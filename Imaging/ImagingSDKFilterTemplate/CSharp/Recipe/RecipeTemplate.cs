@@ -13,9 +13,6 @@ namespace CSharp.Recipe
 
         protected IImageConsumer pipelineBegin;
         protected IImageProvider pipelineEnd;
-
-
-
         protected IImageProvider pipelineSource;
 
 

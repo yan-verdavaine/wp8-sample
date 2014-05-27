@@ -31,7 +31,7 @@
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
             <shell:ApplicationBarIconButton IconUri="/Assets/appbar.image.select.png" Text="Image" Click="ApplicationBarIconButton_Image"/>
-            <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/feature.video.png" Text="Save" Click="ApplicationBarIconButton_Live"  />
+            <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/feature.video.png" Text="Live" Click="ApplicationBarIconButton_Live"  />
             <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/edit.png" Text="Info" Click="ApplicationBarIconButton_Info"  />
             <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/like.png" Text="Bench" Click="ApplicationBarIconButton_Bench"  />
             

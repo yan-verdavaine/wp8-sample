@@ -13,6 +13,7 @@ using System.Threading;
 using System.Windows.Media;
 using System.Windows.Threading;
 using Microsoft.Phone.Info;
+using System.Threading.Tasks;
 
 namespace ImagingSDKFIlterTemplate
 {
@@ -22,8 +23,8 @@ namespace ImagingSDKFIlterTemplate
         {
             //update factory param value with slider value
             RecipeFactory.Current.Param = e.NewValue;
+            //idication recipe should be updated
             UpdateEffect();
-
         }
 
 
@@ -155,7 +156,7 @@ namespace ImagingSDKFIlterTemplate
                 _cameraStreamSource.UpdateEffect();
         }
 
-        private async void Initialize()
+        private async Task Initialize()
         {
 
 
@@ -199,7 +200,6 @@ namespace ImagingSDKFIlterTemplate
             
             if (_cameraStreamSource != null)
             {
-                _cameraStreamSource.Close();
                 _cameraStreamSource.FrameRateChanged -= CameraStreamSource_FPSChanged;
                 _cameraStreamSource = null;
             }
@@ -225,7 +225,7 @@ namespace ImagingSDKFIlterTemplate
            _fps = String.Format("FPS : {0}", e);
         }
 
-        private async void LayoutRoot_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        private async void canvas_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
             if (_cameraSemaphore.WaitOne(100))
             {
@@ -235,7 +235,7 @@ namespace ImagingSDKFIlterTemplate
             }
         }
 
-        private void ApplicationBarIconButton_Switch(object sender, EventArgs e)
+        private async void ApplicationBarIconButton_Switch(object sender, EventArgs e)
         {
 
             if (PhotoCaptureDevice.AvailableSensorLocations.Contains(CameraSensorLocation.Front))
@@ -244,7 +244,7 @@ namespace ImagingSDKFIlterTemplate
                 {
                     _cameraLocation = _cameraLocation == CameraSensorLocation.Back ? CameraSensorLocation.Front : CameraSensorLocation.Back;
                     Uninitialize();
-                    Initialize();
+                   await  Initialize();
 
                     _cameraSemaphore.Release();
                 }
@@ -256,5 +256,7 @@ namespace ImagingSDKFIlterTemplate
             displayInfo.Visibility = displayInfo.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
         }
         #endregion
+
+    
     }
 }

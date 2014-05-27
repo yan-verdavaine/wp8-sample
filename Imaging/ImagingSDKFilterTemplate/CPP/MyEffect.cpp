@@ -1,7 +1,12 @@
 #include "pch.h"
 #include "MyEffect.h"
+
+//include use to acces IBuffer memory
 #include <wrl.h>
 #include <robuffer.h>
+
+//concurrency::create_async
+#include <ppltasks.h>
 
 using namespace CPP;
 
@@ -19,7 +24,14 @@ MyEffect::~MyEffect(void)
 
 Windows::Foundation::IAsyncAction^ MyEffect::LoadAsync()
 {
+	//if you don't need to load data, return nullptr
 	return nullptr;
+
+	//or use concurrency::create_async
+	return concurrency::create_async([this]()
+	{
+		//load you data here
+	});
 }
 
 Windows::Storage::Streams::IBuffer^ MyEffect::ProvideSourceBuffer(Windows::Foundation::Size imageSize)

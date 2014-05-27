@@ -13,6 +13,7 @@ using Windows.Storage.Streams;
 using System.Runtime.InteropServices.WindowsRuntime;
 using ImagingSDKFIlterTemplate.Recipe;
 using System.Globalization;
+using System.Windows;
 
 
 namespace ImagingSDKFIlterTemplate
@@ -24,14 +25,13 @@ namespace ImagingSDKFIlterTemplate
         private MediaStreamDescription _videoStreamDescription = null;
         private DispatcherTimer _frameRateTimer = null;
         private MemoryStream _frameStream = null;
-        private Object _cameraMutex = new Object();
         private PhotoCaptureDevice _camera = null;
 
         private long _currentTime = 0;
         private int _frameStreamOffset = 0;
         private int _frameTime = 0;
         private int _frameCount = 0;
-        private Size _frameSize = new Size(0, 0);
+        private Windows.Foundation.Size _frameSize = new Windows.Foundation.Size(0, 0);
         private int _frameBufferSize = 0;
         private byte[] _frameBuffer = null;
         private Bitmap _frameBitmap = null;
@@ -40,6 +40,7 @@ namespace ImagingSDKFIlterTemplate
         private byte[] _cameraFrameBuffer = null;
         private Bitmap _cameraBitmap = null;
         private IImageProvider _effect = null;
+        private BitmapImageSource _source = null;
         private BitmapRenderer _renderer = null;
         private bool _updateEffect = true;
         /// <summary>
@@ -52,7 +53,7 @@ namespace ImagingSDKFIlterTemplate
         /// </summary>
         /// <param name="_cameraEffect">Camera effect to use.</param>
         /// <param name="size">Size of the media element where the stream is rendered to.</param>
-        public CameraStreamSource(PhotoCaptureDevice camera, Size size)
+        public CameraStreamSource(PhotoCaptureDevice camera, Windows.Foundation.Size size)
         {
             _camera = camera;
 
@@ -79,7 +80,7 @@ namespace ImagingSDKFIlterTemplate
                     ColorMode.Yuv420Sp,
                     new uint[] { (uint)_frameSize.Width, (uint)_frameSize.Width },
                     new IBuffer[] { _cameraFrameBuffer.AsBuffer(0, layersize), _cameraFrameBuffer.AsBuffer(layersize, layersizeuv) });
-
+            _source = new BitmapImageSource(_cameraBitmap);
             _frameBitmap = new Bitmap(
                     _frameSize,
                     ColorMode.Bgra8888,
@@ -128,7 +129,7 @@ namespace ImagingSDKFIlterTemplate
 
         protected override void CloseMedia()
         {
-            lock (_cameraMutex)
+         
             {
                 _camera = null;
                 if (_frameStream != null)
@@ -145,30 +146,36 @@ namespace ImagingSDKFIlterTemplate
                 }
 
                
-              
                 if (_renderer != null)
                 {
-                    _renderer.Bitmap = null;
+                    _renderer.Bitmap = null; // bug  : crash on bitmap dispose
+  
                     _renderer.Dispose();
                     _renderer = null;
                   
                 }
+
                 if (_effect != null && _effect is IDisposable)
                 {
-                    (_effect as IDisposable).Dispose();
+                  // (_effect as IDisposable).Dispose(); // bug : crash on CustomEffectBase dispose
                     _effect = null;
+                }
+              
+                if (_source != null)
+                {
+                    _source.Dispose();
+                    _source = null;
                 }
                 if (_frameBitmap != null)
                 {
-                    _frameBitmap.Dispose();
+                   _frameBitmap.Dispose();
                     _frameBitmap = null;
                 }
                 if (_cameraBitmap != null)
                 {
-                    _cameraBitmap.Dispose();
+                   _cameraBitmap.Dispose();
                     _cameraBitmap = null;
                 }
-
 
 
                 _frameStreamOffset = 0;
@@ -188,7 +195,7 @@ namespace ImagingSDKFIlterTemplate
         protected override void GetSampleAsync(MediaStreamType mediaStreamType)
         {
 
-            lock (_cameraMutex)
+            
             {
 
                 if (_camera == null)
@@ -210,8 +217,9 @@ namespace ImagingSDKFIlterTemplate
                 if (_effect != null && _effect is IDisposable)
                 {
                     (_effect as IDisposable).Dispose();
+                    _effect = null;
                 }
-                _effect = RecipeFactory.Current.CreatePipeline(new BitmapImageSource(_cameraBitmap));
+                _effect = RecipeFactory.Current.CreatePipeline(_source);
                 _renderer.Source = _effect;
             }
             _updateEffect = false;
@@ -220,6 +228,7 @@ namespace ImagingSDKFIlterTemplate
 
 
             var task = _renderer.RenderAsync().AsTask();
+
             task.ContinueWith((action) =>
             {
                 if (_frameStream != null)
@@ -268,14 +277,7 @@ namespace ImagingSDKFIlterTemplate
         {
             _updateEffect = true;
         }
-        internal void Close()
-        {
-            lock (_cameraMutex)
-                if (_camera != null)
-                {
-                    _camera = null;
-                }
-        }
+        
     }
 
 }

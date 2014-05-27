@@ -13,9 +13,6 @@ namespace CSharp.Recipe
 
         protected IImageConsumer pipelineBegin;
         protected IImageProvider pipelineEnd;
-
-
-
         protected IImageProvider pipelineSource;
 
 
@@ -82,7 +79,7 @@ namespace CSharp.Recipe
 
             virtual public void Dispose()
             {
-                throw new NotImplementedException();
+               
             }
     }
 }

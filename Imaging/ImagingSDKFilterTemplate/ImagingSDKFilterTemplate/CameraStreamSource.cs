@@ -30,7 +30,7 @@ namespace ImagingSDKFIlterTemplate
         private long _currentTime = 0;
         private int _frameStreamOffset = 0;
         private int _frameTime = 0;
-        private int _frameCount = 0;
+  
         private Windows.Foundation.Size _frameSize = new Windows.Foundation.Size(0, 0);
         private int _frameBufferSize = 0;
         private byte[] _frameBuffer = null;
@@ -43,10 +43,13 @@ namespace ImagingSDKFIlterTemplate
         private BitmapImageSource _source = null;
         private BitmapRenderer _renderer = null;
         private bool _updateEffect = true;
-        /// <summary>
-        /// Occurs when rendering frame rate changes.
-        /// </summary>
-        public event EventHandler<int> FrameRateChanged;
+
+
+        bool m_initFPSComputation = true;
+        DateTime m_startTime;
+        long m_nbPicture;
+        public Double FPS { get; private set; }
+        
 
         /// <summary>
         /// Constructor.
@@ -118,9 +121,7 @@ namespace ImagingSDKFIlterTemplate
 
             // Start frame rate timer
 
-            _frameRateTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(1) };
-            _frameRateTimer.Tick += FrameRateTimer_Tick;
-            _frameRateTimer.Start();
+           
 
             // Report that we finished initializing its internal state and can now pass in frame samples
 
@@ -138,12 +139,7 @@ namespace ImagingSDKFIlterTemplate
                     _frameStream = null;
                 }
 
-                if (_frameRateTimer != null)
-                {
-                    _frameRateTimer.Stop();
-                    _frameRateTimer.Tick -= FrameRateTimer_Tick;
-                    _frameRateTimer = null;
-                }
+               
 
                
                 if (_renderer != null)
@@ -180,7 +176,7 @@ namespace ImagingSDKFIlterTemplate
 
                 _frameStreamOffset = 0;
                 _frameTime = 0;
-                _frameCount = 0;
+           
                 _frameBufferSize = 0;
                 _frameBuffer = null;
                 _cameraFrameBuffer = null;
@@ -192,9 +188,15 @@ namespace ImagingSDKFIlterTemplate
         /// <summary>
         /// Processes camera frameBuffer using the set effect and provides media element with a filtered frameBuffer.
         /// </summary>
-        protected override void GetSampleAsync(MediaStreamType mediaStreamType)
+        protected async override void GetSampleAsync(MediaStreamType mediaStreamType)
         {
-
+            if (m_initFPSComputation)
+            {
+                FPS = -1;
+                m_startTime = DateTime.Now;
+                m_nbPicture = 0;
+                m_initFPSComputation = false;
+            }
             
             {
 
@@ -203,7 +205,7 @@ namespace ImagingSDKFIlterTemplate
                     return;
                     _frameStream.Position = 0;
                     _currentTime += _frameTime;
-                    _frameCount++;
+               
 
                     var sample = new MediaStreamSample(_videoStreamDescription, _frameStream, _frameStreamOffset, _frameBufferSize, _currentTime, _emptyAttributes);
 
@@ -227,22 +229,30 @@ namespace ImagingSDKFIlterTemplate
 
 
 
-            var task = _renderer.RenderAsync().AsTask();
+           await _renderer.RenderAsync();
 
-            task.ContinueWith((action) =>
-            {
+         //   task.ContinueWith((action) =>
+          //  {
                 if (_frameStream != null)
                 {
                     _frameStream.Position = 0;
                     _currentTime += _frameTime;
-                    _frameCount++;
 
                     var sample = new MediaStreamSample(_videoStreamDescription, _frameStream, _frameStreamOffset, _frameBufferSize, _currentTime, _emptyAttributes);
 
                     ReportGetSampleCompleted(sample);
                 }
 
-            });
+          //  });
+                ++m_nbPicture;
+                var t = DateTime.Now;
+                if (m_nbPicture > 10 && t.Subtract(m_startTime).TotalMilliseconds > 1000)
+                {
+                    FPS = m_nbPicture / t.Subtract(m_startTime).TotalSeconds;
+                    m_startTime = t;
+                    m_nbPicture = 0;
+
+                }
 
         }
 
@@ -263,15 +273,7 @@ namespace ImagingSDKFIlterTemplate
             throw new NotImplementedException();
         }
 
-        private void FrameRateTimer_Tick(object sender, EventArgs e)
-        {
-            if (FrameRateChanged != null)
-            {
-                FrameRateChanged(this, _frameCount);
-            }
-
-            _frameCount = 0;
-        }
+       
 
         internal void UpdateEffect()
         {

@@ -19,6 +19,7 @@ using System.Threading.Tasks;
 using Windows.Storage.Streams;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Nokia.Graphics.Imaging;
+using System.ComponentModel;
 
 namespace viewfinder.control
 {
@@ -86,7 +87,7 @@ namespace viewfinder.control
             InitializeComponent();
             Mode = StrechMode.UniformFill;
             this.LayoutUpdated += ViewFinder_LayoutUpdated;
-            if (App.RootFrame != null)
+            if (DesignerProperties.IsInDesignTool == false)
             {
                 App.RootFrame.OrientationChanged += RootFrame_OrientationChanged;
                 App.RootFrame.Navigating += RootFrame_Navigating;
@@ -262,13 +263,16 @@ namespace viewfinder.control
             double scale = m_Mode == StrechMode.UniformFill ? Math.Max(s1, s2) : Math.Min(s1, s2);
 
             var t = new TransformGroup();
-
             if (m_sensorLocation == CameraSensorLocation.Front)
             {
+                t.Children.Add(new CompositeTransform() { Rotation = -(m_orientationAngle + m_captureDevice.SensorRotationInDegrees), CenterX = viewfinderCanvas.ActualWidth / 2, CenterY = viewfinderCanvas.ActualHeight / 2, ScaleX = scale, ScaleY = scale });
                 t.Children.Add(new ScaleTransform() { ScaleX = -1, CenterX = viewfinderCanvas.ActualWidth / 2, CenterY = viewfinderCanvas.ActualHeight / 2 });
             }
-            t.Children.Add(new CompositeTransform() { Rotation = m_orientationAngle + m_captureDevice.SensorRotationInDegrees, CenterX = viewfinderCanvas.ActualWidth / 2, CenterY = viewfinderCanvas.ActualHeight / 2, ScaleX = scale, ScaleY = scale });
-                
+            else
+            {
+                t.Children.Add(new CompositeTransform() { Rotation = m_orientationAngle + m_captureDevice.SensorRotationInDegrees, CenterX = viewfinderCanvas.ActualWidth / 2, CenterY = viewfinderCanvas.ActualHeight / 2, ScaleX = scale, ScaleY = scale });
+            }
+          
             viewfinderBrush.Transform = t;
             
 

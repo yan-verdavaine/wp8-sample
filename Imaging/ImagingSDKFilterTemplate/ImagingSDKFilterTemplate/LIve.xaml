@@ -37,7 +37,8 @@
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
             <shell:ApplicationBarIconButton IconUri="/Assets/appbar.camera.switch.png" Text="switch" Click="ApplicationBarIconButton_Switch"/>
             <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/edit.png" Text="Info" Click="ApplicationBarIconButton_Info"  />
-
+            <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/feature.camera.png" Text="Shot" Click="ApplicationBarIconButton_Shot"  />
+            <shell:ApplicationBarIconButton IconUri="/icon/appbar.camera.fast.png" Text="Fast Shot" Click="ApplicationBarIconButton_ShotFast"  />
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
 </phone:PhoneApplicationPage>

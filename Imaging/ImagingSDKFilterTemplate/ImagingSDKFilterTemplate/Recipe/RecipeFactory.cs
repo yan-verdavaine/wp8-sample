@@ -20,8 +20,9 @@ namespace ImagingSDKFIlterTemplate.Recipe
 
         public IImageProvider CreatePipeline(IImageProvider source)
         {
-
+        
             var value = 0.5 + 3 * Param;
+            // return new FilterEffect(source) { Filters = new IFilter[] { new GrayscaleFilter() } };
             //return new RecipeCSharpEffect(source, value); //Recipe with C# custom effect
           //  return new RecipeCSharpFilter(source, value);//Recipe with C# custom Filter
            // return new RecipeCPPEffect(source, value);   //Recipe with CPP custom effect   

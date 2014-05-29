@@ -457,11 +457,6 @@ namespace ImagingSDKFIlterTemplate
         }
 
 
-
-
-
-        #endregion
-
         private async void ApplicationBarIconButton_Shot(object sender, EventArgs e)
         {
             var imageInMemory = await TakePicture();
@@ -485,7 +480,7 @@ namespace ImagingSDKFIlterTemplate
 
             MessageBox.Show("Image saved");
         }
-
+        #endregion
 
     }
 }

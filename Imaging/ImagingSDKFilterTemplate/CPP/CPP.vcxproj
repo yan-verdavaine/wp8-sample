@@ -55,7 +55,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <GenerateManifest>false</GenerateManifest>
-    <NuGetPackageImportStamp>e01d2246</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>419c18c1</NuGetPackageImportStamp>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -146,6 +146,7 @@
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\NokiaImagingSDK.1.2.99\build\native\NokiaImagingSDK.targets" Condition="Exists('..\packages\NokiaImagingSDK.1.2.99\build\native\NokiaImagingSDK.targets')" />
     <Import Project="..\..\PipelineManager\packages\NokiaImagingSDK.1.2.142\build\native\NokiaImagingSDK.targets" Condition="Exists('..\..\PipelineManager\packages\NokiaImagingSDK.1.2.142\build\native\NokiaImagingSDK.targets')" />
+    <Import Project="..\..\PipelineManager\packages\NokiaImagingSDK.1.2.115\build\native\NokiaImagingSDK.targets" Condition="Exists('..\..\PipelineManager\packages\NokiaImagingSDK.1.2.115\build\native\NokiaImagingSDK.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -153,5 +154,6 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\NokiaImagingSDK.1.2.99\build\native\NokiaImagingSDK.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NokiaImagingSDK.1.2.99\build\native\NokiaImagingSDK.targets'))" />
     <Error Condition="!Exists('..\..\PipelineManager\packages\NokiaImagingSDK.1.2.142\build\native\NokiaImagingSDK.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\PipelineManager\packages\NokiaImagingSDK.1.2.142\build\native\NokiaImagingSDK.targets'))" />
+    <Error Condition="!Exists('..\..\PipelineManager\packages\NokiaImagingSDK.1.2.115\build\native\NokiaImagingSDK.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\PipelineManager\packages\NokiaImagingSDK.1.2.115\build\native\NokiaImagingSDK.targets'))" />
   </Target>
 </Project>

@@ -21,12 +21,12 @@ namespace PipelineManager.Manager
         public PipelineManager(IImageProvider source)
         {
             Source = source;
-            SetPipelineBeginEnd();
+            updatePipelineBeginEnd();
         }
 
 
 
-        protected void SetPipelineBeginEnd()
+        protected void updatePipelineBeginEnd()
         {
             if (lPipeline.Count == 0)
             {
@@ -58,7 +58,7 @@ namespace PipelineManager.Manager
             lElement.Add(effect);
             lPipeline.Add(effect);
 
-            SetPipelineBeginEnd();
+            updatePipelineBeginEnd();
 
         }
 
@@ -85,7 +85,7 @@ namespace PipelineManager.Manager
                 lPipeline.Add(effect);
                 lElement.Add(effect);
                 lElement.Add(filter);
-                SetPipelineBeginEnd();
+                updatePipelineBeginEnd();
             }
 
 
@@ -140,40 +140,30 @@ namespace PipelineManager.Manager
             if (lPipeline.Count == 0)
                 return;
 
-
-            if (lElement.Last() is ICustomEffect && !(lElement.Last() is CustomEffectBase))
+            //IFilter and CustomFilterBase
+            if (lElement.Last() is IFilter)
             {
-                //remove ICustomEffect
-                if (lElement.Last() is IDisposable)
-                {
-                    (lElement.Last() as IDisposable).Dispose();
-                }
-                lElement.Remove(lElement.Last());
-                //remove DelegatingEffect
-                if (lElement.Last() is IDisposable)
-                {
-                    (lElement.Last() as IDisposable).Dispose();
-                }
-                lElement.Remove(lElement.Last());
-                lPipeline.Remove(lPipeline.Last());
 
-            }
-            else if (lElement.Last() is ICustomFilter && !(lElement.Last() is CustomFilterBase))
-            {
-                //remove ICustomFilter
-                if (lElement.Last() is IDisposable)
-                {
-                    (lElement.Last() as IDisposable).Dispose();
-                }
-                lElement.Remove(lElement.Last());
-                //remove DelegatingFilter
+                //remove Filter
                 if (lElement.Last() is IDisposable)
                 {
                     (lElement.Last() as IDisposable).Dispose();
                 }
                 lElement.Remove(lElement.Last());
 
-                //remove filter or FilterEffect
+                if(lElement.Last() is DelegatingFilter)
+                {
+
+                    //remove DelegatingFilter
+                    if (lElement.Last() is IDisposable)
+                    {
+                        (lElement.Last() as IDisposable).Dispose();
+                    }
+                    lElement.Remove(lElement.Last());
+                }
+               
+
+                //remove filter from FilterEffect
                 var effect = lPipeline.Last() as FilterEffect;
                 if (effect.Filters.Count() > 1)
                 {
@@ -181,25 +171,7 @@ namespace PipelineManager.Manager
                     l.Remove(l.Last());
                     effect.Filters = l;
                 }
-            }
-            else if (lElement.Last() is IFilter)
-            {
-                //Remove filter
-                if (lElement.Last() is IDisposable)
-                {
-                    (lElement.Last() as IDisposable).Dispose();
-                }
-                lElement.Remove(lElement.Last());
-
-                //remove filter or FilterEffect
-                var effect = lPipeline.Last() as FilterEffect;
-                if (effect.Filters.Count() > 1)
-                {
-                    var l = effect.Filters.ToList();
-                    l.Remove(l.Last());
-                    effect.Filters = l;
-                }
-                else
+                else//remove FilterEffect
                 {
                     if (lElement.Last() is IDisposable)
                     {
@@ -210,21 +182,29 @@ namespace PipelineManager.Manager
                 }
 
             }
-
-
-
             else
             {
-                //remove effect
+                //remove Effect
                 if (lElement.Last() is IDisposable)
                 {
                     (lElement.Last() as IDisposable).Dispose();
                 }
                 lElement.Remove(lElement.Last());
+
+                if (lElement.Count>0 && lElement.Last() is DelegatingEffect)
+                {
+                    //remove DelegatingEffect
+                    if (lElement.Last() is IDisposable)
+                    {
+                        (lElement.Last() as IDisposable).Dispose();
+                    }
+                    lElement.Remove(lElement.Last());
+                }
                 lPipeline.Remove(lPipeline.Last());
 
             }
-            SetPipelineBeginEnd();
+        
+            updatePipelineBeginEnd();
 
 
         }
@@ -290,7 +270,7 @@ namespace PipelineManager.Manager
             set
             {
                 pipelineSource = new WeakReference<IImageProvider>(value);
-                SetPipelineBeginEnd();
+                updatePipelineBeginEnd();
 
             }
         }

@@ -30,7 +30,7 @@ namespace ImagingSDKFIlterTemplate
         private long _currentTime = 0;
         private int _frameStreamOffset = 0;
         private int _frameTime = 0;
-  
+
         private Windows.Foundation.Size _frameSize = new Windows.Foundation.Size(0, 0);
         private int _frameBufferSize = 0;
         private byte[] _frameBuffer = null;
@@ -49,7 +49,7 @@ namespace ImagingSDKFIlterTemplate
         DateTime m_startTime;
         long m_nbPicture;
         public Double FPS { get; private set; }
-        
+
 
         /// <summary>
         /// Constructor.
@@ -121,7 +121,7 @@ namespace ImagingSDKFIlterTemplate
 
             // Start frame rate timer
 
-           
+
 
             // Report that we finished initializing its internal state and can now pass in frame samples
 
@@ -130,7 +130,7 @@ namespace ImagingSDKFIlterTemplate
 
         protected override void CloseMedia()
         {
-         
+
             {
                 _camera = null;
                 if (_frameStream != null)
@@ -139,24 +139,24 @@ namespace ImagingSDKFIlterTemplate
                     _frameStream = null;
                 }
 
-               
 
-               
+
+
                 if (_renderer != null)
                 {
                     _renderer.Bitmap = null; // bug  : crash on bitmap dispose
-  
+
                     _renderer.Dispose();
                     _renderer = null;
-                  
+
                 }
 
                 if (_effect != null && _effect is IDisposable)
                 {
-                  // (_effect as IDisposable).Dispose(); // bug : crash on CustomEffectBase dispose
+                    // (_effect as IDisposable).Dispose(); // bug : crash on CustomEffectBase dispose
                     _effect = null;
                 }
-              
+
                 if (_source != null)
                 {
                     _source.Dispose();
@@ -164,19 +164,19 @@ namespace ImagingSDKFIlterTemplate
                 }
                 if (_frameBitmap != null)
                 {
-                   _frameBitmap.Dispose();
+                    _frameBitmap.Dispose();
                     _frameBitmap = null;
                 }
                 if (_cameraBitmap != null)
                 {
-                   _cameraBitmap.Dispose();
+                    _cameraBitmap.Dispose();
                     _cameraBitmap = null;
                 }
 
 
                 _frameStreamOffset = 0;
                 _frameTime = 0;
-           
+
                 _frameBufferSize = 0;
                 _frameBuffer = null;
                 _cameraFrameBuffer = null;
@@ -197,22 +197,13 @@ namespace ImagingSDKFIlterTemplate
                 m_nbPicture = 0;
                 m_initFPSComputation = false;
             }
-            
+
+
+            if (_camera != null)
             {
-
-                if (_camera == null)
-                {
-                    return;
-                    _frameStream.Position = 0;
-                    _currentTime += _frameTime;
-               
-
-                    var sample = new MediaStreamSample(_videoStreamDescription, _frameStream, _frameStreamOffset, _frameBufferSize, _currentTime, _emptyAttributes);
-
-                    ReportGetSampleCompleted(sample);
-                }
                 _camera.GetPreviewBufferYCbCr(_cameraFrameBuffer);
             }
+
 
             if (_updateEffect)
             {
@@ -229,30 +220,32 @@ namespace ImagingSDKFIlterTemplate
 
 
 
-           await _renderer.RenderAsync();
+            await _renderer.RenderAsync();
 
-         //   task.ContinueWith((action) =>
-          //  {
-                if (_frameStream != null)
-                {
-                    _frameStream.Position = 0;
-                    _currentTime += _frameTime;
 
-                    var sample = new MediaStreamSample(_videoStreamDescription, _frameStream, _frameStreamOffset, _frameBufferSize, _currentTime, _emptyAttributes);
 
-                    ReportGetSampleCompleted(sample);
-                }
+            if (_frameStream != null)
+            {
+                _frameStream.Position = 0;
+                _currentTime += _frameTime;
 
-          //  });
-                ++m_nbPicture;
-                var t = DateTime.Now;
-                if (m_nbPicture > 10 && t.Subtract(m_startTime).TotalMilliseconds > 1000)
-                {
-                    FPS = m_nbPicture / t.Subtract(m_startTime).TotalSeconds;
-                    m_startTime = t;
-                    m_nbPicture = 0;
+                var sample = new MediaStreamSample(_videoStreamDescription, _frameStream, _frameStreamOffset, _frameBufferSize, _currentTime, _emptyAttributes);
 
-                }
+                ReportGetSampleCompleted(sample);
+            }
+
+
+
+
+            ++m_nbPicture;
+            var t = DateTime.Now;
+            if (m_nbPicture > 10 && t.Subtract(m_startTime).TotalMilliseconds > 1000)
+            {
+                FPS = m_nbPicture / t.Subtract(m_startTime).TotalSeconds;
+                m_startTime = t;
+                m_nbPicture = 0;
+
+            }
 
         }
 
@@ -273,13 +266,13 @@ namespace ImagingSDKFIlterTemplate
             throw new NotImplementedException();
         }
 
-       
+
 
         internal void UpdateEffect()
         {
             _updateEffect = true;
         }
-        
+
     }
 
 }

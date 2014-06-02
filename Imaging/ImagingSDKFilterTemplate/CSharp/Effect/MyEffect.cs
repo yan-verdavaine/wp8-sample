@@ -16,6 +16,11 @@ namespace CSharp
         {
             factor = f;
         }
+        public MyEffect( double f = 2.0) :
+            base(null, false)
+        {
+            factor = f;
+        }
         protected override void OnProcess(PixelRegion sourcePixelRegion, PixelRegion targetPixelRegion)
         {
             sourcePixelRegion.ForEachRow((index, width, pos) =>

@@ -55,6 +55,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <GenerateManifest>false</GenerateManifest>
+    <NuGetPackageImportStamp>e01d2246</NuGetPackageImportStamp>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -137,20 +138,20 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="packages.config" />
     <None Include="wpa81\Help\Nokia Imaging SDK.chm" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsPhone\v$(TargetPlatformVersion)\Microsoft.Cpp.WindowsPhone.$(TargetPlatformVersion).targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\NokiaImagingSDK.1.2.99\build\native\NokiaImagingSDK.targets" Condition="Exists('..\packages\NokiaImagingSDK.1.2.99\build\native\NokiaImagingSDK.targets')" />
+    <Import Project="..\..\PipelineManager\packages\NokiaImagingSDK.1.2.142\build\native\NokiaImagingSDK.targets" Condition="Exists('..\..\PipelineManager\packages\NokiaImagingSDK.1.2.142\build\native\NokiaImagingSDK.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\NokiaImagingSDK.1.2.99\build\native\NokiaImagingSDK.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NokiaImagingSDK.1.2.99\build\native\NokiaImagingSDK.targets'))" />
+    <Error Condition="!Exists('..\..\PipelineManager\packages\NokiaImagingSDK.1.2.142\build\native\NokiaImagingSDK.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\PipelineManager\packages\NokiaImagingSDK.1.2.142\build\native\NokiaImagingSDK.targets'))" />
   </Target>
 </Project>

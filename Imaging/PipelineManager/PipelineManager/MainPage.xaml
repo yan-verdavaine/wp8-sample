@@ -16,7 +16,24 @@
     <Grid>
         <Grid x:Name="LayoutRoot" Background="Transparent">
             <Image Name="display"/>
-            <Button VerticalAlignment="Bottom" Click="Button_Click">Picture</Button>
+            <StackPanel VerticalAlignment="Bottom">
+                <StackPanel Orientation="Horizontal">
+                    <Button  Click="Button_filter">filter</Button>
+                    <Button  Click="Button_ICustomfilter">ICustomfilter</Button>
+                    <Button  Click="Button_CustomfilterBase">CustomfilterBase</Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button  Click="Button_Effect">Effect</Button>
+                    <Button  Click="Button_ICustomEffect">ICustomEffect</Button>
+                    <Button  Click="Button_CustomEffectBase">CustomEffectBase</Button>
+                    
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <Button  Click="Button_Click">Picture</Button>
+                    <Button  Click="Button_Undo">Undo</Button>
+                </StackPanel>
+            </StackPanel>
         </Grid>
     </Grid>
 

@@ -11,9 +11,9 @@ namespace CSharp.Recipe
     {
 
 
-        protected IImageConsumer pipelineBegin;
-        protected IImageProvider pipelineEnd;
-        protected IImageProvider pipelineSource;
+        WeakReference<IImageConsumer> pipelineBegin = null;
+        WeakReference<IImageProvider> pipelineEnd = null;
+        WeakReference<IImageProvider> pipelineSource = null;
 
 
 
@@ -25,35 +25,55 @@ namespace CSharp.Recipe
 
         protected void SetPipelineBeginEnd(IImageConsumer begin, IImageProvider end)
         {
-            pipelineBegin = begin;
-            if (pipelineSource != null && begin != null)
-                pipelineBegin.Source = pipelineSource;
 
+            IImageProvider source;
 
-            pipelineEnd = end;
+            if (begin != null && pipelineSource != null && pipelineSource.TryGetTarget(out source))
+            {
+                begin.Source = source;
+            }
+
+            pipelineBegin = new WeakReference<IImageConsumer>(begin);
+            pipelineEnd = new WeakReference<IImageProvider>(end);
         }
 
 
         #region IImageProvider implementation :
         public Windows.Foundation.IAsyncOperation<Bitmap> GetBitmapAsync(Bitmap bitmap, OutputOption outputOption)
         {
-            return pipelineEnd.GetBitmapAsync(bitmap, outputOption);
+            IImageProvider provider = null;
+            if (pipelineEnd == null || !pipelineEnd.TryGetTarget(out provider))
+                return null;
+            else
+                return provider.GetBitmapAsync(bitmap, outputOption);
         }
 
         public Windows.Foundation.IAsyncOperation<ImageProviderInfo> GetInfoAsync()
         {
-            return pipelineEnd.GetInfoAsync();
+            IImageProvider provider = null;
+            if (pipelineEnd == null || !pipelineEnd.TryGetTarget(out provider))
+                return null;
+            else
+                return provider.GetInfoAsync();
         }
 
         public bool Lock(RenderRequest renderRequest)
         {
-            return pipelineEnd.Lock(renderRequest);
+            IImageProvider provider = null;
+            if (pipelineEnd == null || !pipelineEnd.TryGetTarget(out provider))
+                return false;
+            else
+                return provider.Lock(renderRequest);
 
         }
 
         public Windows.Foundation.IAsyncAction PreloadAsync()
         {
-            return pipelineEnd.PreloadAsync();
+            IImageProvider provider = null;
+            if (pipelineEnd == null || !pipelineEnd.TryGetTarget(out provider))
+                return null;
+            else
+                return provider.PreloadAsync();
         }
         #endregion
 
@@ -64,15 +84,22 @@ namespace CSharp.Recipe
         {
             get
             {
+                IImageProvider source;
 
-                return pipelineSource;
+                if (pipelineSource != null && pipelineSource.TryGetTarget(out source))
+                {
+                    return source;
+                }
+
+                return null;
 
             }
             set
             {
-                pipelineSource = value;
-                if (pipelineBegin != null)
-                    pipelineBegin.Source = value;
+                pipelineSource = new WeakReference<IImageProvider>(value);
+                IImageConsumer begin;
+                if (pipelineBegin != null && pipelineBegin.TryGetTarget(out begin))
+                    begin.Source = value;
             }
         }
         #endregion
@@ -99,13 +126,10 @@ namespace CSharp.Recipe
             if (disposing)
             {
                 // Free any other managed objects here. 
-                //
+                pipelineBegin = null;
+                pipelineEnd = null;
+                pipelineSource = null;
             }
-            pipelineBegin = null;
-            pipelineEnd = null;
-            pipelineSource = null;
-
-
 
             // Free any unmanaged objects here. 
             //

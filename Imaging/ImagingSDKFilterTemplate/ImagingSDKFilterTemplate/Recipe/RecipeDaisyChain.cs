@@ -17,6 +17,7 @@ namespace ImagingSDKFIlterTemplate.Recipe
             effect_1 = new HdrEffect(source);
             effect_2 = new FilterEffect(effect_1);
 
+            
             if(factor>2) factor = 2;
             effect_2.Filters = new IFilter[] { new HueSaturationFilter(-1 + factor, 0), new LomoFilter() };
 
@@ -24,19 +25,39 @@ namespace ImagingSDKFIlterTemplate.Recipe
 
 
         }
-        override public void Dispose()
+        #region IDispose
+        // Flag: Has Dispose already been called? 
+        bool disposed = false;
+
+        // Protected implementation of Dispose pattern. 
+        protected override void Dispose(bool disposing)
         {
-            if (effect_1 != null)
+            if (disposed)
+                return;
+
+            if (disposing)
             {
-                effect_1.Dispose();
-                effect_1 = null;
+                if (effect_1 != null)
+                {
+                    effect_1.Dispose();
+                    effect_1 = null;
+                }
+                if (effect_2 != null)
+                {
+                    effect_2.Dispose();
+                    effect_2 = null;
+                }
             }
-            if (effect_2 != null)
-            {
-                effect_2.Dispose();
-                effect_2 = null;
-            }
-          
+
+            // Free any unmanaged objects here. 
+            //
+            disposed = true;
+            // Call base class implementation. 
+            base.Dispose(disposing);
         }
+        #endregion
+
+
+       
     }
 }

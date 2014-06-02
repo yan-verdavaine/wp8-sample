@@ -27,25 +27,43 @@ namespace ImagingSDKFIlterTemplate.Recipe
              SetPipelineBeginEnd(effect, effect);
         }
 
-        override public void Dispose()
-        {
-            if (filter != null)
-            {
-                filter.Dispose();
-                filter = null;
-            }
-            if (delegatingFilter != null)
-            {
-                delegatingFilter.Dispose();
-                delegatingFilter = null;
-            }
-            if (effect != null)
-            {
-                effect.Dispose();
-                effect = null;
-            }
-        }
 
+        #region IDispose
+        // Flag: Has Dispose already been called? 
+        bool disposed = false;
+
+        // Protected implementation of Dispose pattern. 
+        protected override void Dispose(bool disposing)
+        {
+            if (disposed)
+                return;
+
+            if (disposing)
+            {
+                if (filter != null)
+                {
+                    filter.Dispose();
+                    filter = null;
+                }
+                if (delegatingFilter != null)
+                {
+                    delegatingFilter.Dispose();
+                    delegatingFilter = null;
+                }
+                if (effect != null)
+                {
+                    effect.Dispose();
+                    effect = null;
+                }
+            }
+
+            // Free any unmanaged objects here. 
+            //
+            disposed = true;
+            // Call base class implementation. 
+            base.Dispose(disposing);
+        }
+        #endregion
 
 
     }

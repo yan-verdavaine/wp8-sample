@@ -33,20 +33,19 @@ namespace ImagingSDKFIlterTemplate.Recipe
 
             if (disposing)
             {
-                if (delegatingEffect != null)
-                {
-                    delegatingEffect.Dispose();
-                    delegatingEffect = null;
-                }
-                if (effect != null)
-                {
-                    effect.Dispose();
-                    effect = null;
-                }
+               
             }
 
-            // Free any unmanaged objects here. 
-            //
+            if (delegatingEffect != null)
+            {
+                delegatingEffect.Dispose();
+                delegatingEffect = null;
+            }
+            if (effect != null)
+            {
+                effect.Dispose();
+                effect = null;
+            }
             disposed = true;
             // Call base class implementation. 
             base.Dispose(disposing);

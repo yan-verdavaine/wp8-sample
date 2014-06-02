@@ -40,25 +40,25 @@ namespace ImagingSDKFIlterTemplate.Recipe
 
             if (disposing)
             {
-                if (filter != null)
-                {
-                    filter.Dispose();
-                    filter = null;
-                }
-                if (delegatingFilter != null)
-                {
-                    delegatingFilter.Dispose();
-                    delegatingFilter = null;
-                }
-                if (effect != null)
-                {
-                    effect.Dispose();
-                    effect = null;
-                }
+               
             }
 
-            // Free any unmanaged objects here. 
-            //
+            if (filter != null)
+            {
+                filter.Dispose();
+                filter = null;
+            }
+            if (delegatingFilter != null)
+            {
+                delegatingFilter.Dispose();
+                delegatingFilter = null;
+            }
+            if (effect != null)
+            {
+                effect.Dispose();
+                effect = null;
+            }
+
             disposed = true;
             // Call base class implementation. 
             base.Dispose(disposing);

@@ -24,13 +24,20 @@ MyFilter::~MyFilter(void)
 
 Nokia::Graphics::Imaging::ICustomFilterResponse^ MyFilter::BeginProcessing(Nokia::Graphics::Imaging::ICustomFilterRequest^ request)
 {
-	if(m_sourceBuffer == nullptr || m_sourceBuffer->Capacity !=4*request->SourceBufferLength)
-		m_sourceBuffer = ref new Windows::Storage::Streams::Buffer (4*request->SourceBufferLength);
+	if(m_sourceBuffer == nullptr || m_sourceBuffer->Capacity < request->SourceBufferLength)
+	{
+		m_sourceBuffer = ref new Windows::Storage::Streams::Buffer (request->SourceBufferLength);
+	}
+
 	m_sourceBuffer->Length = m_sourceBuffer->Capacity;
 
-	if(m_targetBuffer == nullptr || m_targetBuffer->Capacity !=4*request->TargetBufferLength)
-		m_targetBuffer = ref new Windows::Storage::Streams::Buffer (4*request->TargetBufferLength);
+	if(m_targetBuffer == nullptr || m_targetBuffer->Capacity < request->TargetBufferLength)
+	{
+		m_targetBuffer = ref new Windows::Storage::Streams::Buffer (request->TargetBufferLength);
+	}
+	
 	m_targetBuffer->Length = m_targetBuffer->Capacity;
+
 	return this;
 
 }

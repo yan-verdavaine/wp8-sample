@@ -91,20 +91,6 @@ namespace PipelineManager.Manager
 
         }
 
-        public void Add(CustomFilterBase filter)
-        {
-
-            Add((IFilter)filter);
-
-        }
-
-        public void Add(CustomEffectBase filter)
-        {
-
-            Add((IImageConsumer)filter);
-
-        }
-
         public void Add(ICustomFilter filter)
         {
 

@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{8f03ef62-9724-42e9-b329-93fc17d740b8}</ProjectGuid>
+    <ProjectGuid>{BBF39CF2-2E3D-4C11-B49E-1FBC497812CE}</ProjectGuid>
     <RootNamespace>CPP</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
@@ -57,7 +57,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <GenerateManifest>false</GenerateManifest>
-    <NuGetPackageImportStamp>a7a45c1f</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>13116cf2</NuGetPackageImportStamp>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -141,12 +141,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="wpa81\Help\Nokia Imaging SDK.chm" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsPhone\v$(TargetPlatformVersion)\Microsoft.Cpp.WindowsPhone.$(TargetPlatformVersion).targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\..\PipelineManager\packages\NokiaImagingSDK.1.2.115\build\native\NokiaImagingSDK.targets" Condition="Exists('..\..\PipelineManager\packages\NokiaImagingSDK.1.2.115\build\native\NokiaImagingSDK.targets')" />
     <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
     <Import Project="..\packages\NokiaImagingSDK.1.2.115\build\native\NokiaImagingSDK.targets" Condition="Exists('..\packages\NokiaImagingSDK.1.2.115\build\native\NokiaImagingSDK.targets')" />
   </ImportGroup>
@@ -154,7 +152,7 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\PipelineManager\packages\NokiaImagingSDK.1.2.115\build\native\NokiaImagingSDK.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\PipelineManager\packages\NokiaImagingSDK.1.2.115\build\native\NokiaImagingSDK.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
     <Error Condition="!Exists('..\packages\NokiaImagingSDK.1.2.115\build\native\NokiaImagingSDK.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NokiaImagingSDK.1.2.115\build\native\NokiaImagingSDK.targets'))" />
   </Target>
 </Project>

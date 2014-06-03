@@ -7,24 +7,20 @@ using System.Threading.Tasks;
 
 namespace CSharp
 {
-    public class MyEffect : CustomEffectBase
+    public class MyFilter : CustomFilterBase
     {
-
         double factor;
-        public MyEffect(IImageProvider source, double f = 2.0):
-            base(source, false)
+        public MyFilter( double f = 2.0):
+            base(new Margins(),false,new ColorMode[]{ColorMode.Bgra8888})
         {
             factor = f;
         }
-        public MyEffect( double f = 2.0) :
-            base(null, false)
-        {
-            factor = f;
-        }
+
         protected override void OnProcess(PixelRegion sourcePixelRegion, PixelRegion targetPixelRegion)
         {
             sourcePixelRegion.ForEachRow((index, width, pos) =>
             {
+
                 for (int x = 0; x < width; ++x, ++index)
                 {
                     uint color = sourcePixelRegion.ImagePixels[index];

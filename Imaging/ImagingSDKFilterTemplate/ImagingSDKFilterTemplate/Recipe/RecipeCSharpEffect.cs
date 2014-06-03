@@ -31,15 +31,15 @@ namespace ImagingSDKFIlterTemplate.Recipe
 
             if (disposing)
             {
-                if (effect != null)
-                {
-                    effect.Dispose();
-                    effect = null;
-                }
+              
             }
 
-            // Free any unmanaged objects here. 
-            //
+            if (effect != null)
+            {
+                effect.Dispose();
+                effect = null;
+            }
+
             disposed = true;
             // Call base class implementation. 
             base.Dispose(disposing);

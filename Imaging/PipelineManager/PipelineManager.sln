@@ -4,6 +4,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PipelineManager", "PipelineManager\PipelineManager.csproj", "{3EC15731-577D-4E13-BCE2-825FD2027085}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8F03EF62-9724-42E9-B329-93FC17D740B8} = {8F03EF62-9724-42E9-B329-93FC17D740B8}
+		{E7523EF7-4B53-49D6-A7BE-81083E237DFE} = {E7523EF7-4B53-49D6-A7BE-81083E237DFE}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CPP", "..\ImagingSDKFilterTemplate\CPP\CPP.vcxproj", "{8F03EF62-9724-42E9-B329-93FC17D740B8}"
 EndProject

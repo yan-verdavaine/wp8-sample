@@ -140,8 +140,8 @@ namespace PipelineManager.Manager
             if (lPipeline.Count == 0)
                 return;
 
-            //IFilter and CustomFilterBase
-            if (lElement.Last() is IFilter)
+            //IFilter and ICustomFilter
+            if (lElement.Last() is IFilter || lElement.Last() is ICustomFilter)
             {
 
                 //remove Filter

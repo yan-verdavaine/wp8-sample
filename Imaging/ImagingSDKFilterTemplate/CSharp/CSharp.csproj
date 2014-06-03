@@ -18,7 +18,9 @@
     <ValidateXaml>true</ValidateXaml>
     <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
-    <NuGetPackageImportStamp>f4939a18</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>654006ba</NuGetPackageImportStamp>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\PipelineManager\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -92,7 +94,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Help\Nokia Imaging SDK.chm" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Nokia.Graphics.Imaging.Managed, Version=1.2.115.0, Culture=neutral, processorArchitecture=MSIL">
@@ -108,12 +112,12 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\NokiaImagingSDK.1.2.99\build\wp8\NokiaImagingSDK.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NokiaImagingSDK.1.2.99\build\wp8\NokiaImagingSDK.targets'))" />
-    <Error Condition="!Exists('..\..\PipelineManager\packages\NokiaImagingSDK.1.2.142\build\wp8\NokiaImagingSDK.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\PipelineManager\packages\NokiaImagingSDK.1.2.142\build\wp8\NokiaImagingSDK.targets'))" />
     <Error Condition="!Exists('..\..\PipelineManager\packages\NokiaImagingSDK.1.2.115\build\wp8\NokiaImagingSDK.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\PipelineManager\packages\NokiaImagingSDK.1.2.115\build\wp8\NokiaImagingSDK.targets'))" />
+    <Error Condition="!Exists('..\packages\NokiaImagingSDK.1.2.115\build\wp8\NokiaImagingSDK.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NokiaImagingSDK.1.2.115\build\wp8\NokiaImagingSDK.targets'))" />
   </Target>
-  <Import Project="..\..\PipelineManager\packages\NokiaImagingSDK.1.2.142\build\wp8\NokiaImagingSDK.targets" Condition="Exists('..\..\PipelineManager\packages\NokiaImagingSDK.1.2.142\build\wp8\NokiaImagingSDK.targets')" />
   <Import Project="..\..\PipelineManager\packages\NokiaImagingSDK.1.2.115\build\wp8\NokiaImagingSDK.targets" Condition="Exists('..\..\PipelineManager\packages\NokiaImagingSDK.1.2.115\build\wp8\NokiaImagingSDK.targets')" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Import Project="..\packages\NokiaImagingSDK.1.2.115\build\wp8\NokiaImagingSDK.targets" Condition="Exists('..\packages\NokiaImagingSDK.1.2.115\build\wp8\NokiaImagingSDK.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

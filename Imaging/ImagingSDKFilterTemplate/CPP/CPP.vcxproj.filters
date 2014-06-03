@@ -43,6 +43,5 @@
       <Filter>wpa81\Help</Filter>
     </None>
     <None Include="packages.config" />
-    <None Include="$(MSBuildThisFileDirectory)\..\..\content\$(MappedPlatformToolset)\Help\Nokia Imaging SDK.chm" />
   </ItemGroup>
 </Project>

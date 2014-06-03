@@ -216,7 +216,7 @@ namespace PipelineManager.Manager
         {
             IImageProvider provider = null;
             if (pipelineEnd == null || !pipelineEnd.TryGetTarget(out provider))
-                return null;
+                throw new InvalidOperationException("No image provider in the pipeline.");
             else
                 return provider.GetBitmapAsync(bitmap, outputOption);
         }
@@ -225,7 +225,7 @@ namespace PipelineManager.Manager
         {
             IImageProvider provider = null;
             if (pipelineEnd == null || !pipelineEnd.TryGetTarget(out provider))
-                return null;
+                throw new InvalidOperationException("No image provider in the pipeline.");
             else
                 return provider.GetInfoAsync();
         }
@@ -234,7 +234,7 @@ namespace PipelineManager.Manager
         {
             IImageProvider provider = null;
             if (pipelineEnd == null || !pipelineEnd.TryGetTarget(out provider))
-                return false;
+                throw new InvalidOperationException("No image provider in the pipeline.");
             else
                 return provider.Lock(renderRequest);
 
@@ -244,7 +244,7 @@ namespace PipelineManager.Manager
         {
             IImageProvider provider = null;
             if (pipelineEnd == null || !pipelineEnd.TryGetTarget(out provider))
-                return null;
+                throw new InvalidOperationException("No image provider in the pipeline.");
             else
                 return provider.PreloadAsync();
         }

@@ -46,7 +46,32 @@ namespace PipelineManager.Manager
             pipelineEnd = new WeakReference<IImageProvider>(lPipeline.Last() as IImageProvider);
         }
 
-        public void Add(IImageConsumer effect)
+
+
+        public void Add(Object obj)
+        {
+            if (obj is IImageConsumer)
+            {
+                addImageConsumer(obj as IImageConsumer);
+            }
+            else if (obj is IFilter)
+            {
+                addIFilter(obj as IFilter);
+            }
+            else if (obj is ICustomFilter)
+            {
+                addICustomFilter(obj as ICustomFilter);
+            }
+            else if (obj is ICustomEffect)
+            {
+                addICustomEffect(obj as ICustomEffect);
+            }
+            else
+            {
+                throw new ArgumentException("Element not supported");
+            }
+        }
+        private void addImageConsumer(IImageConsumer effect)
         {
             if (effect is IImageProvider == false)
                 throw new Exception("Add(IImageConsumer) : element should implement IImageProvider interface");
@@ -62,7 +87,7 @@ namespace PipelineManager.Manager
 
         }
 
-        public void Add(IFilter filter)
+        private void addIFilter(IFilter filter)
         {
 
             if (lPipeline.Count > 0 && lPipeline.Last() is FilterEffect)
@@ -91,23 +116,9 @@ namespace PipelineManager.Manager
 
         }
 
-        public void Add(CustomFilterBase filter)
+   
+        private void addICustomFilter(ICustomFilter filter)
         {
-
-            Add((IFilter)filter);
-
-        }
-
-        public void Add(CustomEffectBase filter)
-        {
-
-            Add((IImageConsumer)filter);
-
-        }
-
-        public void Add(ICustomFilter filter)
-        {
-
 
             Add(new DelegatingFilter(filter));
             lElement.Add(filter);
@@ -115,10 +126,8 @@ namespace PipelineManager.Manager
 
         }
 
-        public void Add(ICustomEffect effect)
+        public void addICustomEffect(ICustomEffect effect)
         {
-
-
             Add(new DelegatingEffect(effect));
             lElement.Add(effect);
 

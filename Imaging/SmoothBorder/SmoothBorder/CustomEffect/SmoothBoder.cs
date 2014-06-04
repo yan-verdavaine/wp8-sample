@@ -73,12 +73,6 @@ namespace SmoothBorder.CustomEffect{
                         {
 
                             var alpha = p.Item3;
-                            if (alpha < 2)
-                            {
-                                targetPixelRegion.ImagePixels[index] = 0xFFFFFFFF;
-                                continue;
-                            }
-
                             uint color = sourcePixelRegion.ImagePixels[index];
                             uint rgb = (color & 0x00FFFFFF);
                             targetPixelRegion.ImagePixels[index] = rgb | (uint)(alpha << 24);

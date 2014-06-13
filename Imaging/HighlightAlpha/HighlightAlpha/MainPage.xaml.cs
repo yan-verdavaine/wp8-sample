@@ -11,6 +11,7 @@ using HighlightAlpha.Resources;
 using Nokia.Graphics.Imaging;
 using System.Windows.Media.Imaging;
 using Microsoft.Phone.Tasks;
+using HighlightAlpha.Filter;
 
 namespace HighlightAlpha
 {
@@ -28,12 +29,16 @@ namespace HighlightAlpha
         bool rendering = false;
         async void GeneratePicture()
         {
-            var bmp = new WriteableBitmap(480,800);
+           
             try
             {
+                var info = await picture.GetInfoAsync();
+
+                var bmp = new WriteableBitmap((int)info.ImageSize.Width, (int)info.ImageSize.Height);
                 rendering = true;
 
-                using (var effect = new CustomEffect.HighlightAlpha(picture,13))
+             //   using (var effect = new CustomEffect.HighlightAlpha(picture,13))
+                using (var effect = new FilterEffect(picture) { Filters = new IFilter[] { new HighlightAlphaFilter(13) } })
                 using (var renderer = new WriteableBitmapRenderer(effect, bmp, OutputOption.PreserveAspectRatio))
                 {
                     display.Source = await renderer.RenderAsync();

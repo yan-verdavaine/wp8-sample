@@ -57,7 +57,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <GenerateManifest>false</GenerateManifest>
-    <NuGetPackageImportStamp>a7a45c1f</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>1e0affeb</NuGetPackageImportStamp>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -154,7 +154,5 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\PipelineManager\packages\NokiaImagingSDK.1.2.115\build\native\NokiaImagingSDK.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\PipelineManager\packages\NokiaImagingSDK.1.2.115\build\native\NokiaImagingSDK.targets'))" />
-    <Error Condition="!Exists('..\packages\NokiaImagingSDK.1.2.115\build\native\NokiaImagingSDK.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NokiaImagingSDK.1.2.115\build\native\NokiaImagingSDK.targets'))" />
   </Target>
 </Project>

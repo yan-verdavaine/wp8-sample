@@ -259,7 +259,7 @@ namespace viewfinder.control
             double s1 = viewfinderCanvas.ActualWidth / previewSize.Width;
             double s2 = viewfinderCanvas.ActualHeight / previewSize.Height;
 
-            //fit out
+            
             double scale = m_Mode == StrechMode.UniformFill ? Math.Max(s1, s2) : Math.Min(s1, s2);
 
             var t = new TransformGroup();
@@ -302,15 +302,12 @@ namespace viewfinder.control
             {
                 commandeRunning = true;
                 int angle = (int)(m_orientationAngle + m_captureDevice.SensorRotationInDegrees);
-                if (angle < 0) angle += 360;
-                if (m_sensorLocation == CameraSensorLocation.Back)
-                {
-                    m_captureDevice.SetProperty(KnownCameraGeneralProperties.EncodeWithOrientation, angle);
-                }
-                else
-                {
-                    m_captureDevice.SetProperty(KnownCameraGeneralProperties.EncodeWithOrientation, -angle);
-                }
+
+                if (m_sensorLocation == CameraSensorLocation.Front)
+                    angle = -angle;
+            
+
+                m_captureDevice.SetProperty(KnownCameraGeneralProperties.EncodeWithOrientation, angle);
                 m_captureDevice.SetProperty(KnownCameraGeneralProperties.SpecifiedCaptureOrientation, 0);
 
 

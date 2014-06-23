@@ -36,8 +36,8 @@
   </Grid>
     <phone:PhoneApplicationPage.ApplicationBar >
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" x:Name="AppBar">
-            <shell:ApplicationBarIconButton x:Name="switchCamera" Text="switch " IconUri="/Assets/AppBar/new.png"  Click="ApplicationBarIconButton_Click"/>
-            <shell:ApplicationBarIconButton  Text="stretch" IconUri="/Assets/AppBar/new.png" Click="ApplicationBarIconButton_Click_1" />
+            <shell:ApplicationBarIconButton x:Name="switchCamera" Text="switch " IconUri="/Assets/AppBar/appbar.camera.switch.png"  Click="ApplicationBarIconButton_Click"/>
+            <shell:ApplicationBarIconButton  Text="stretch" IconUri="/Assets//AppBar/appbar.arrow.expand.png" Click="ApplicationBarIconButton_Click_1" />
             <shell:ApplicationBarIconButton  Text="capture" IconUri="/Assets/AppBar/feature.camera.png" Click="ApplicationBarIconButton_Click_2"  />
 
         </shell:ApplicationBar>
